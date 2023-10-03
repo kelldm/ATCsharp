@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ATCsharp", "ATCsharp\ATCsharp.csproj", "{A798BACA-B36B-48AA-84E0-79C5EF419672}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A798BACA-B36B-48AA-84E0-79C5EF419672}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A798BACA-B36B-48AA-84E0-79C5EF419672}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A798BACA-B36B-48AA-84E0-79C5EF419672}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A798BACA-B36B-48AA-84E0-79C5EF419672}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6693A62C-2A4A-46E2-B3BE-39F38B8F1D7A}
+	EndGlobalSection
+EndGlobal
