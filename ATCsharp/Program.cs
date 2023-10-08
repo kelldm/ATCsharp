@@ -16,13 +16,15 @@ class Program
         while (true)
         {
             //Menu Principal
-
+            Console.WriteLine("Seja bem-vindo(a)! :)");
             Console.WriteLine("Menu:");
+            Console.WriteLine("-------------");
             Console.WriteLine("[1] Inclusão de Conta");
             Console.WriteLine("[2] Alteração de Saldo");
             Console.WriteLine("[3] Exclusão de Conta");
             Console.WriteLine("[4] Relatórios Gerenciais");
             Console.WriteLine("[5] Saída do Programa");
+            Console.WriteLine("-------------");
 
             int opcao;
             if (int.TryParse(Console.ReadLine(), out opcao))
@@ -45,13 +47,15 @@ class Program
                         SalvarContasNoArquivo();
                         return;
                     default:
-                        Console.WriteLine("Opção inválida. Tente novamente.");
+                        Console.WriteLine("-------------");
+                        Console.WriteLine("Opção inválida :/ Tente novamente.");
                         break;
                 }
             }
             else
             {
-                Console.WriteLine("Opção inválida. Tente novamente.");
+                Console.WriteLine("-------------");
+                Console.WriteLine("Opção inválida :/ Tente novamente.");
             }
         }
     }
@@ -62,15 +66,17 @@ class Program
         int id;
         if (!int.TryParse(Console.ReadLine(), out id) || id <= 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Número da conta inválido.");
             return;
         }
 
-        Console.Write("Nome: ");
+        Console.Write("Nome e sobrenome: ");
         string nome = Console.ReadLine();
 
         if (string.IsNullOrWhiteSpace(nome) || nome.Split(' ').Length < 2)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Deve conter pelo menos nome e sobrenome.");
             return;
         }
@@ -79,12 +85,14 @@ class Program
         double saldo;
         if (!double.TryParse(Console.ReadLine(), out saldo) || saldo < 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Saldo inválido.");
             return;
         }
 
         if (contas.Any(c => c.Id == id))
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Já existe uma conta com este número.");
             return;
         }
@@ -97,6 +105,7 @@ class Program
     {
         if (contas.Count == 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Nenhuma conta cadastrada.");
             return;
         }
@@ -105,6 +114,7 @@ class Program
         int id;
         if (!int.TryParse(Console.ReadLine(), out id))
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Número da conta inválido.");
             return;
         }
@@ -113,6 +123,7 @@ class Program
 
         if (conta == null)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Conta não encontrada.");
             return;
         }
@@ -163,6 +174,7 @@ class Program
     {
         if (contas.Count == 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Nenhuma conta cadastrada.");
             return;
         }
@@ -171,6 +183,7 @@ class Program
         int id;
         if (!int.TryParse(Console.ReadLine(), out id))
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Número da conta inválido.");
             return;
         }
@@ -179,17 +192,20 @@ class Program
 
         if (conta == null)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Conta não encontrada.");
             return;
         }
 
         if (conta.Saldo != 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Não é possível excluir uma conta com saldo diferente de zero.");
             return;
         }
 
         contas.Remove(conta);
+        Console.WriteLine("-------------");
         Console.WriteLine("Conta excluída com sucesso.");
     }
 
@@ -197,6 +213,7 @@ class Program
     {
         if (contas.Count == 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Nenhuma conta cadastrada.");
             return;
         }
@@ -221,12 +238,14 @@ class Program
                     ListarTodasAsContas();
                     break;
                 default:
+                    Console.WriteLine("-------------");
                     Console.WriteLine("Opção inválida.");
                     break;
             }
         }
         else
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Opção inválida.");
         }
     }
@@ -237,20 +256,24 @@ class Program
 
         if (clientesComSaldoNegativo.Count > 0)
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Clientes com saldo negativo:");
             foreach (var cliente in clientesComSaldoNegativo)
             {
                 Console.WriteLine(cliente);
+                Console.WriteLine("-------------");
             }
         }
         else
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Nenhum cliente com saldo negativo encontrado.");
         }
     }
 
     private static void ListarClientesComSaldoAcimaDeUmValor()
     {
+        Console.WriteLine("-------------");
         Console.Write("Informe o valor mínimo de saldo: ");
         double valorMinimo;
         if (double.TryParse(Console.ReadLine(), out valorMinimo) && valorMinimo >= 0)
@@ -259,6 +282,7 @@ class Program
 
             if (clientesComSaldoAcimaDoValor.Count > 0)
             {
+                Console.WriteLine("-------------");
                 Console.WriteLine($"Clientes com saldo acima de {valorMinimo:0.00}:");
                 foreach (var cliente in clientesComSaldoAcimaDoValor)
                 {
@@ -267,11 +291,13 @@ class Program
             }
             else
             {
+                Console.WriteLine("-------------");
                 Console.WriteLine($"Nenhum cliente com saldo acima de {valorMinimo:0.00} encontrado.");
             }
         }
         else
         {
+            Console.WriteLine("-------------");
             Console.WriteLine("Valor mínimo inválido.");
         }
     }
@@ -282,44 +308,60 @@ class Program
         foreach (var conta in contas)
         {
             Console.WriteLine(conta);
+            Console.WriteLine("-------------");
         }
     }
 
     private static void CarregarContasDoArquivo()
     {
+        const string NOME_ARQ = "contas.csv";
+        const string DIR = @"C:\Users\raque\Downloads";
+        string caminho = Path.Combine(DIR, NOME_ARQ);
+
+        if (!File.Exists(caminho))
+        {
+            Console.WriteLine("Erro: arquivo não existe");
+            return;
+        }
+
         try
         {
-            if (File.Exists("contas.csv"))
+            using (var arquivo = new StreamReader(caminho))
             {
-                string[] linhas = File.ReadAllLines("contas.csv");
-                foreach (string linha in linhas.Skip(1))
+                string linha = arquivo.ReadLine();
+
+                while (linha != null)
                 {
                     string[] campos = linha.Split(',');
-                    if (campos.Length == 3 &&
-                        int.TryParse(campos[0], out int id) &&
-                        double.TryParse(campos[2], out double saldo))
+
+                    if (campos.Length == 3 && int.TryParse(campos[0], out int id) && double.TryParse(campos[2], out double saldo))
                     {
                         contas.Add(new Conta(id, campos[1], saldo));
                     }
+
+                    linha = arquivo.ReadLine();
                 }
             }
         }
-        catch (IOException ex)
+        catch (Exception ex)
         {
             Console.WriteLine("Erro ao carregar contas do arquivo: " + ex.Message);
         }
     }
 
+
     private static void SalvarContasNoArquivo()
     {
+        const String NOME_ARQ = "contas.csv";
+        const String DIR = @"C:\Users\raque\Downloads";
+        string caminho = Path.Combine(DIR, NOME_ARQ);
         try
         {
-            using (StreamWriter writer = new StreamWriter("contas.csv"))
+            using (StreamWriter writer = new StreamWriter(caminho))
             {
-                writer.WriteLine("Número da Conta, Nome, Saldo");
                 foreach (var conta in contas)
                 {
-                    writer.WriteLine($"{conta.Id}, {conta.Nome}, {conta.Saldo:0.00}");
+                    writer.WriteLine($"{conta.Id}, {conta.Nome}, {conta.Saldo}");
                 }
             }
         }
@@ -327,5 +369,6 @@ class Program
         {
             Console.WriteLine("Erro ao salvar contas no arquivo: " + ex.Message);
         }
+        Console.WriteLine("------SUAS INFORMAÇÕES FORAM SALVAS! ATÉ LOGO :) -----");
     }
 }
